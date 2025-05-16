@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="bg-gray-800 text-gray-100">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="bg-gray-700 rounded-lg shadow-md p-4 mb-4">
+      <!-- User Details -->
+      <h2 class="text-2xl font-bold mb-4">User Details</h2>
+     
+      <p>{{ users.first_name + ' '+users.last_name }}</p>
+      <p> {{ users.city }}</p>
+      
+    </div>
+
+    <!-- Recipes Section -->
+    <div class="bg-gray-700 rounded-lg shadow-md p-4 mt-4">
+      <h2 class="text-2xl font-bold mb-4">Recipes by {{ users.first_name+' '+users.last_name }}</h2>
+      {% if blogs %}
+  {% for blog in blogs %}
+    <div class="mb-4 border px-6 rounded-xl py-6 flex items-center justify-between">
+      <div class="w-3/4">
+        <h3 class="text-lg font-bold">
+          <a href="/recipe/{{blog.blog_id}}">{{ blog.title }}</a>
+        </h3>
+        <p>{{ blog.description }}</p>
+      </div>
+      <div class="flex items-center">
+        <span class="inline-flex items-center border-0 py-1 px-3 focus:outline-none hover:bg-gray-800 rounded text-base mt-4 md:mt-0">
+          <a href="/edit_recipe/{{blog.blog_id}}"><img src="/static/images/edit_logo.png" alt="edit" style="height: 45px;"></a>
+        </span>
+        <span id="delete_button" class="border-0 py-1 px-3 focus:outline-none hover:bg-gray-800 rounded text-base mt-4 md:mt-0">
+          <a href="/delete_recipe/{{blog.blog_id}}"><img src="/static/images/delete_logo.png" alt="delete" style="height: 45px;"></a>
+        </span>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+      <p class="text-xl text-gray-400 font-cursive" style="margin-top: 5px; margin-bottom: 40px; font-family: 'Nova';">You have no recipes yet</p>
+      <p class="text-xl text-gray-400 italic font-cursive" style="margin-top: 5px; margin-bottom: 40px; font-family: 'Nova';"><a href="{{url_for('create_recipe')}}">Share a recipe....</a></p>
+      {% endif %}
+    </div>
+    
+  </div>
+</div>
+
+<script src="/static/scripts/view_profile.js"></script>
+
+
+{% endblock %}
+
